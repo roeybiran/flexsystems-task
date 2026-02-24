@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Technical Test – React Developer
 
-## Getting Started
+Dear Candidate,
 
-First, run the development server:
+You are about to take an exam that simulates a significant portion of the requirements you will need to fulfill in a development position at our company.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Task
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You are required to build a website that displays movies.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Instructions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Visit the website: [https://www.themoviedb.org/](https://www.themoviedb.org/)
 
-## Learn More
+The site offers an API at: [https://www.themoviedb.org/documentation/api](https://www.themoviedb.org/documentation/api)
 
-To learn more about Next.js, take a look at the following resources:
+Create a new website that can perform the following actions:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Display all popular movies on the homepage.
+- Provide an option to filter results by **Popular**, **Airing Now**, and **My Favorites**.
+- Include an input field for movie search.
+- Add pagination for **Popular** and **Airing Now**.
+- Selecting or clicking a movie should open a separate page (not a new tab) displaying the movie details.
+- On the movie details page, include an option to add the movie to favorites.
+- You may use `localStorage` for this; there is no need to use an external API.
+- All site navigation, including scrolling, must be done using the keyboard (arrow keys, Enter, and Escape).
+- The Tab key should not perform any action on the page.
+- Regarding the search input:
+  - A search request should only be sent if there are at least **2 characters**.
+  - A request should only be sent if the user has not typed a character in the last **500 ms**.
+- All search requests must be rate-limited to up to **5 requests per 10 seconds**.
+- Disable mouse scrolling (via overflow).
+- Display the content with **4 cards per row**, and enable scrolling through keyboard navigation.
+- While navigating between categories (**Popular / Airing Now**), the request should be sent:
+  - On focus (after **2 seconds**), or
+  - Immediately on click.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Highlights
 
-## Deploy on Vercel
+- Use **React + Redux-Saga**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Pay special attention to the following topics:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Coding principles
+- Naming conventions
+- Readability
+- Error handling (timeouts, missing or incorrect fields)
+- Number of renders
+- Efficiency of data loading from the API
+- Overall application loading speed
+
+Upon completion, create a GitHub repository and push the necessary files.
+
+Good luck!
