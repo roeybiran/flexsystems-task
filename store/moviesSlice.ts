@@ -32,6 +32,7 @@ export interface MoviesState {
   categories: Record<CategoryFilter, CategoryState>;
   activeFilter: FilterOption;
   focusedFilter: FilterOption;
+  lastFocusedMovieId: number | null;
   search: SearchState;
   detailsById: Record<number, MovieDetailsState>;
 }
@@ -80,6 +81,7 @@ const initialState: MoviesState = {
   },
   activeFilter: "popular",
   focusedFilter: "popular",
+  lastFocusedMovieId: null,
   search: {
     query: "",
     loading: false,
@@ -104,6 +106,9 @@ export const moviesSlice = createSlice({
     },
     setFocusedFilter(state, action: PayloadAction<FilterOption>) {
       state.focusedFilter = action.payload;
+    },
+    setLastFocusedMovieId(state, action: PayloadAction<number | null>) {
+      state.lastFocusedMovieId = action.payload;
     },
     setCategoryPage(state, action: PayloadAction<{ category: CategoryFilter; page: number }>) {
       const { category, page } = action.payload;

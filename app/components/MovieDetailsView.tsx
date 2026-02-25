@@ -60,6 +60,15 @@ export function MovieDetailsView({ movieId }: MovieDetailsViewProps) {
   }, [releaseDate, runtime, voteAverage]);
 
   const navigateHome = () => {
+    if (
+      typeof window !== "undefined" &&
+      window.history.length > 1 &&
+      document.referrer.startsWith(window.location.origin)
+    ) {
+      router.back();
+      return;
+    }
+
     router.push("/");
   };
 
@@ -99,8 +108,13 @@ export function MovieDetailsView({ movieId }: MovieDetailsViewProps) {
       return;
     }
 
-    if (event.key === "Escape" || event.key === "ArrowLeft") {
+    if (event.key === "Escape") {
       navigateHome();
+      return;
+    }
+
+    if (event.key === "ArrowLeft") {
+      focusAction(0);
       return;
     }
 

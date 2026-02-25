@@ -23,7 +23,7 @@ export const MovieCard = forwardRef<HTMLButtonElement, MovieCardProps>(function 
     <button
       ref={ref}
       type="button"
-      className="h-full text-left focus-visible:outline-none"
+      className="h-full scroll-mt-24 scroll-mb-24 text-left focus-visible:outline-none"
       onFocus={onFocus}
       onClick={onActivate}
       aria-label={`Open details for ${movie.title}`}

@@ -22,6 +22,7 @@ export function MovieBrowser() {
 
   const moviesState = useAppSelector((state) => state.movies);
   const favoriteIds = useAppSelector((state) => state.favorites.ids);
+  const lastFocusedMovieId = useAppSelector((state) => state.movies.lastFocusedMovieId);
 
   const [focusZone, setFocusZone] = useState<FocusZone>("filters");
   const [focusedControlIndex, setFocusedControlIndex] = useState(0);
@@ -36,6 +37,7 @@ export function MovieBrowser() {
   const cardRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const previousPageRef = useRef<HTMLButtonElement | null>(null);
   const nextPageRef = useRef<HTMLButtonElement | null>(null);
+  const initializedFocusRef = useRef(false);
 
   const searchIsActive = moviesState.search.query.trim().length >= 2;
 
@@ -131,6 +133,7 @@ export function MovieBrowser() {
   };
 
   const goToMovieDetails = (movieId: number) => {
+    dispatch(moviesActions.setLastFocusedMovieId(movieId));
     router.push(`/movie/${movieId}`);
   };
 
@@ -161,7 +164,7 @@ export function MovieBrowser() {
     const targetCard = cardRefs.current[clampedIndex];
     if (targetCard) {
       targetCard.focus();
-      targetCard.scrollIntoView({ block: "nearest" });
+      targetCard.scrollIntoView({ block: "center", inline: "nearest" });
     }
   };
 
@@ -387,7 +390,7 @@ export function MovieBrowser() {
         setFocusedCardIndex(0);
         setFocusZone("grid");
         targetCard?.focus();
-        targetCard?.scrollIntoView({ block: "nearest" });
+        targetCard?.scrollIntoView({ block: "center", inline: "nearest" });
       } else {
         setFocusedControlIndex(0);
         setFocusZone("filters");
@@ -399,8 +402,33 @@ export function MovieBrowser() {
   }, [focusZone, paginationVisible, visibleMovies.length]);
 
   useEffect(() => {
-    popularButtonRef.current?.focus();
-  }, []);
+    if (initializedFocusRef.current) {
+      return;
+    }
+
+    if (lastFocusedMovieId !== null && visibleMovies.length === 0) {
+      return;
+    }
+
+    const rafId = requestAnimationFrame(() => {
+      const restoreIndex =
+        lastFocusedMovieId === null ? -1 : visibleMovies.findIndex((movie) => movie.id === lastFocusedMovieId);
+
+      if (restoreIndex >= 0) {
+        setFocusedCardIndex(restoreIndex);
+        setFocusZone("grid");
+        const targetCard = cardRefs.current[restoreIndex];
+        targetCard?.focus();
+        targetCard?.scrollIntoView({ block: "center", inline: "nearest" });
+      } else {
+        popularButtonRef.current?.focus();
+      }
+
+      initializedFocusRef.current = true;
+    });
+
+    return () => cancelAnimationFrame(rafId);
+  }, [lastFocusedMovieId, visibleMovies]);
 
   return (
     <div className="flex h-screen flex-col gap-3 overflow-hidden p-3 md:p-4" onKeyDown={handleKeyNavigation}>
@@ -498,6 +526,7 @@ export function MovieBrowser() {
             onFocus={() => {
               setFocusZone("grid");
               setFocusedCardIndex(index);
+              dispatch(moviesActions.setLastFocusedMovieId(movie.id));
             }}
             onActivate={() => goToMovieDetails(movie.id)}
           />

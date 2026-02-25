@@ -52,3 +52,57 @@ Pay special attention to the following topics:
 Upon completion, create a GitHub repository and push the necessary files.
 
 Good luck!
+
+## Setup
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment variables
+
+Create `.env.local` in the project root:
+
+```bash
+cp .env.example .env.local
+```
+
+If `.env.example` is not available, create `.env.local` manually with one of the following:
+
+```bash
+TMDB_API_READ_TOKEN=your_tmdb_read_token
+```
+
+or
+
+```bash
+TMDB_API_KEY=your_tmdb_api_key
+```
+
+At least one credential is required.
+
+### 3. Run in development
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### 4. Production build
+
+```bash
+npm run build
+npm run start
+```
+
+## Keyboard Navigation Notes
+
+- Navigation is keyboard-only (`Arrow` keys, `Enter`, `Escape`).
+- `Tab` is disabled on purpose.
+- Pagination exists for **Popular** and **Airing Now**:
+  - Move focus down to the bottom controls.
+  - Use `ArrowLeft` / `ArrowRight` to focus **Previous** / **Next**.
+  - Press `Enter` to change page.
